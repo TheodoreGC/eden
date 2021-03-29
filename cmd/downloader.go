@@ -35,6 +35,7 @@ var downloadEVECmd = &cobra.Command{
 		}
 		if viperLoaded {
 			eveRegistry = viper.GetString("eve.registry")
+			eveDistribution = viper.GetString("eve.distribution")
 			eveTag = viper.GetString("eve.tag")
 			eveUefiTag = viper.GetString("eve.uefi-tag")
 			eveArch = viper.GetString("eve.arch")
@@ -52,13 +53,14 @@ var downloadEVECmd = &cobra.Command{
 		}
 		format := model.DiskFormat()
 		eveDesc := utils.EVEDescription{
-			ConfigPath:  adamDist,
-			Arch:        eveArch,
-			HV:          eveHV,
-			Registry:    eveRegistry,
-			Tag:         eveTag,
-			Format:      format,
-			ImageSizeMB: eveImageSizeMB,
+			ConfigPath:   adamDist,
+			Arch:         eveArch,
+			HV:           eveHV,
+			Registry:     eveRegistry,
+			Distribution: eveDistribution,
+			Tag:          eveTag,
+			Format:       format,
+			ImageSizeMB:  eveImageSizeMB,
 		}
 		uefiDesc := utils.UEFIDescription{
 			Registry: eveRegistry,
@@ -87,6 +89,7 @@ var downloadEVERootFSCmd = &cobra.Command{
 			eveArch = viper.GetString("eve.arch")
 			eveHV = viper.GetString("eve.hv")
 			eveRegistry = viper.GetString("eve.registry")
+			eveDistribution = viper.GetString("eve.distribution")
 			if outputDir == "" {
 				outputDir = filepath.Dir(utils.ResolveAbsPath(viper.GetString("eve.image-file")))
 			}
@@ -95,13 +98,14 @@ var downloadEVERootFSCmd = &cobra.Command{
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		eveDesc := utils.EVEDescription{
-			ConfigPath:  certsDir,
-			Arch:        eveArch,
-			HV:          eveHV,
-			Registry:    eveRegistry,
-			Tag:         eveTag,
-			Format:      imageFormat,
-			ImageSizeMB: eveImageSizeMB,
+			ConfigPath:   certsDir,
+			Arch:         eveArch,
+			HV:           eveHV,
+			Registry:     eveRegistry,
+			Distribution: eveDistribution,
+			Tag:          eveTag,
+			Format:       imageFormat,
+			ImageSizeMB:  eveImageSizeMB,
 		}
 		image, err := utils.DownloadEveRootFS(eveDesc, outputDir)
 		if err != nil {

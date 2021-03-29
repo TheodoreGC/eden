@@ -37,6 +37,8 @@ var (
 
 	eveRegistry string
 
+	eveDistribution string
+
 	devModel string
 
 	eveImageSizeMB int
@@ -138,6 +140,7 @@ var setupCmd = &cobra.Command{
 			eveDist = utils.ResolveAbsPath(viper.GetString("eve.dist"))
 			eveRepo = viper.GetString("eve.repo")
 			eveRegistry = viper.GetString("eve.registry")
+			eveDistribution = viper.GetString("eve.distribution")
 			eveTag = viper.GetString("eve.tag")
 			eveUefiTag = viper.GetString("eve.uefi-tag")
 			eveHV = viper.GetString("eve.hv")
@@ -265,13 +268,14 @@ var setupCmd = &cobra.Command{
 			}
 		} else {
 			eveDesc := utils.EVEDescription{
-				ConfigPath:  certsDir,
-				Arch:        eveArch,
-				HV:          eveHV,
-				Registry:    eveRegistry,
-				Tag:         eveTag,
-				Format:      imageFormat,
-				ImageSizeMB: eveImageSizeMB,
+				ConfigPath:   certsDir,
+				Arch:         eveArch,
+				HV:           eveHV,
+				Registry:     eveRegistry,
+				Distribution: eveDistribution,
+				Tag:          eveTag,
+				Format:       imageFormat,
+				ImageSizeMB:  eveImageSizeMB,
 			}
 			uefiDesc := utils.UEFIDescription{
 				Registry: eveRegistry,
@@ -392,6 +396,7 @@ func setupInit() {
 	setupCmd.Flags().StringVarP(&eveDist, "eve-dist", "", "", "directory to save EVE")
 	setupCmd.Flags().StringVarP(&eveRepo, "eve-repo", "", defaults.DefaultEveRepo, "EVE repo")
 	setupCmd.Flags().StringVarP(&eveRegistry, "eve-registry", "", defaults.DefaultEveRegistry, "EVE registry")
+	setupCmd.Flags().StringVarP(&eveDistribution, "eve-distribution", "", defaults.DefaultEveDistribution, "EVE distribution")
 	setupCmd.Flags().StringVarP(&eveTag, "eve-tag", "", defaults.DefaultEVETag, "EVE tag")
 	setupCmd.Flags().StringVarP(&eveUefiTag, "eve-uefi-tag", "", defaults.DefaultEVETag, "EVE UEFI tag")
 	setupCmd.Flags().StringVarP(&eveArch, "eve-arch", "", runtime.GOARCH, "EVE arch")

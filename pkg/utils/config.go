@@ -332,6 +332,8 @@ func generateConfigFileFromTemplate(filePath string, templateString string, cont
 			return defaults.DefaultEveRepo
 		case "eve.registry":
 			return defaults.DefaultEveRegistry
+		case "eve.distribution":
+			return defaults.DefaultEveDistribution
 		case "eve.tag":
 			return defaults.DefaultEVETag
 		case "eve.hostfwd":

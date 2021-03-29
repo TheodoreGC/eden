@@ -28,3 +28,4 @@ tests/workflow/workflow.large.txt
 eve-config-dir/*
 
 export
+.DS_Store

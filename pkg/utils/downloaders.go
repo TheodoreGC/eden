@@ -3,8 +3,6 @@ package utils
 import (
 	"bytes"
 	"fmt"
-	"github.com/lf-edge/eden/pkg/defaults"
-	uuid "github.com/satori/go.uuid"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -12,18 +10,22 @@ import (
 	"text/template"
 	"unicode"
 
+	"github.com/lf-edge/eden/pkg/defaults"
+	uuid "github.com/satori/go.uuid"
+
 	log "github.com/sirupsen/logrus"
 )
 
 // EVEDescription provides information about EVE to download
 type EVEDescription struct {
-	ConfigPath  string
-	Arch        string
-	HV          string
-	Registry    string
-	Tag         string
-	Format      string
-	ImageSizeMB int
+	ConfigPath   string
+	Arch         string
+	HV           string
+	Registry     string
+	Distribution string
+	Tag          string
+	Format       string
+	ImageSizeMB  int
 }
 
 // Image extracts image tag from EVEDescription
@@ -31,11 +33,14 @@ func (desc EVEDescription) Image() (string, error) {
 	if desc.Registry == "" {
 		desc.Registry = defaults.DefaultEveRegistry
 	}
+	if desc.Distribution == "" {
+		desc.Distribution = defaults.DefaultEveDistribution
+	}
 	version, err := desc.Version()
 	if err != nil {
 		return "", err
 	}
-	return fmt.Sprintf("%s/eve:%s", desc.Registry, version), nil
+	return fmt.Sprintf("%s/%s:%s", desc.Registry, desc.Distribution, version), nil
 }
 
 // Version extracts version from EVEDescription
@@ -43,13 +48,18 @@ func (desc EVEDescription) Version() (string, error) {
 	if desc.Tag == "" {
 		return "", fmt.Errorf("tag not present")
 	}
-	if desc.Arch == "" {
-		return "", fmt.Errorf("arch not present")
+
+	result := desc.Tag
+
+	if desc.HV != "" {
+		result += "-" + desc.HV
 	}
-	if desc.HV == "" {
-		return "", fmt.Errorf("hv not present")
+
+	if desc.Arch != "" {
+		result += "-" + desc.Arch
 	}
-	return fmt.Sprintf("%s-%s-%s", desc.Tag, desc.HV, desc.Arch), nil
+
+	return fmt.Sprintf("%s", result), nil
 }
 
 // UEFIDescription provides information about UEFI to download

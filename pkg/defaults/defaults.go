@@ -60,10 +60,11 @@ const (
 	DefaultProcContainerRef     = "itmoeve/eden-processing"
 	DefaultEveRepo              = "https://github.com/lf-edge/eve.git"
 	DefaultEveRegistry          = "lfedge"
+	DefaultEveDistribution      = "eve"
 	DefaultRegistry             = "docker.io"
 
-	DefaultSFTPUser     = "user"
-	DefaultSFTPPassword = "password"
+	DefaultSFTPUser      = "user"
+	DefaultSFTPPassword  = "password"
 	DefaultSFTPDirPrefix = "/eserver/run"
 
 	DefaultEServerTag          = "1.4"
@@ -196,6 +197,7 @@ var (
 		"eve.firmware":     "eve-firmware",
 		"eve.repo":         "eve-repo",
 		"eve.registry":     "eve-registry",
+		"eve.distribution": "eve-distribution",
 		"eve.tag":          "eve-tag",
 		"eve.uefi-tag":     "eve-uefi-tag",
 		"eve.hostfwd":      "eve-hostfwd",

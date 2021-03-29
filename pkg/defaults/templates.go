@@ -95,6 +95,9 @@ eve:
     #eve registry to use
     registry: '{{parse "eve.registry"}}'
 
+    #eve distribution to use
+    distribution: '{{parse "eve.distribution"}}'
+
     #eve tag
     tag: '{{parse "eve.tag"}}'
 
